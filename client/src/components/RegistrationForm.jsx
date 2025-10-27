@@ -5,6 +5,8 @@ import Lottie from 'react-lottie-player'
 import axios from 'axios'
 
 const RegistrationForm = ({ onSuccess, onError, isSuccess, error, setError, setIsSuccess, accessCode }) => {
+  const API_BASE = import.meta.env.VITE_API_URL;
+
   const [formData, setFormData] = useState({ name: '', email: '' })
   const [isLoading, setIsLoading] = useState(false)
   const formRef = useRef(null)
@@ -31,7 +33,7 @@ const RegistrationForm = ({ onSuccess, onError, isSuccess, error, setError, setI
 
     setIsLoading(true)
     try {
-      const response = await axios.post('/api/register', formData)
+      const response = await axios.post(`${API_BASE}/api/register`, formData);
       onSuccess(response.data.code)
       speak(`Access code generated: ${response.data.code}. See you at the workshop!`)
       setFormData({ name: '', email: '' })
